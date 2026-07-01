@@ -1,13 +1,26 @@
 import type { Route } from "./+types/admin";
-import { Link, useSearchParams } from "react-router";
+import { Link, useSearchParams, Form } from "react-router";
+import { redirect } from "react-router";
 import { DOMAINS, hitungKategori } from "../data/kuesioner";
+import { getSessionUser, deleteSession, clearSessionCookie } from "../lib/auth.server";
 
 export function meta({}: Route.MetaArgs) {
   return [{ title: "Admin – Rekap Kuesioner RME" }];
 }
 
+export async function action({ request, context }: Route.ActionArgs) {
+  const db = (context.cloudflare.env as any).DB as D1Database;
+  await deleteSession(db, request);
+  return redirect("/admin/login", {
+    headers: { "Set-Cookie": clearSessionCookie() },
+  });
+}
+
 export async function loader({ request, context }: Route.LoaderArgs) {
   const db = (context.cloudflare.env as any).DB as D1Database;
+
+  const user = await getSessionUser(db, request);
+  if (!user) throw redirect("/admin/login");
   const url = new URL(request.url);
   const page = parseInt(url.searchParams.get("page") ?? "1");
   const limit = 20;
@@ -42,11 +55,12 @@ export async function loader({ request, context }: Route.LoaderArgs) {
     page,
     totalPages: Math.ceil(total / limit),
     stats,
+    username: user.username,
   };
 }
 
 export default function Admin({ loaderData }: Route.ComponentProps) {
-  const { rows, total, page, totalPages, stats } = loaderData as any;
+  const { rows, total, page, totalPages, stats, username } = loaderData as any;
   const [searchParams] = useSearchParams();
 
   return (
@@ -59,7 +73,20 @@ export default function Admin({ loaderData }: Route.ComponentProps) {
             <h1 className="text-2xl font-bold text-gray-900">Panel Admin</h1>
             <p className="text-gray-500 text-sm">Rekap Kuesioner RME – RS Abdul Manap Kota Jambi</p>
           </div>
-          <Link to="/" className="text-sm text-blue-600 hover:underline">← Kembali ke Beranda</Link>
+          <div className="flex items-center gap-3">
+            <span className="text-sm text-gray-500 hidden sm:block">
+              👤 <span className="font-medium text-gray-700">{username}</span>
+            </span>
+            <Form method="post">
+              <button
+                type="submit"
+                className="text-sm bg-red-50 text-red-600 hover:bg-red-100 border border-red-200 px-3 py-1.5 rounded-lg transition-colors font-medium"
+              >
+                Logout
+              </button>
+            </Form>
+            <Link to="/" className="text-sm text-blue-600 hover:underline">← Beranda</Link>
+          </div>
         </div>
 
         {/* Statistik */}

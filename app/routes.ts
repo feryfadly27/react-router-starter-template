@@ -7,5 +7,6 @@ export default [
   route("submit", "routes/submit.tsx"),
   route("hasil/:id", "routes/hasil.$id.tsx"),
   route("admin", "routes/admin.tsx"),
+  route("admin/login", "routes/admin.login.tsx"),
   route("terima-kasih", "routes/terima-kasih.tsx"),
 ] satisfies RouteConfig;
