@@ -1,5 +1,5 @@
 import type { Route } from "./+types/submit";
-import { useNavigate } from "react-router";
+import { useNavigate, useFetcher } from "react-router";
 import { useState, useEffect } from "react";
 import { DOMAINS, hitungKategori } from "../data/kuesioner";
 
@@ -9,22 +9,27 @@ export function meta({}: Route.MetaArgs) {
 
 export async function action({ request, context }: Route.ActionArgs) {
   const db = (context.cloudflare.env as any).DB as D1Database;
-  const body = (await request.json()) as any;
+  const fd = await request.formData();
 
-  const { nama, tanggal_lahir, jenis_kelamin, pekerjaan, jabatan, nomor_hp, bersedia, jawaban } = body;
+  const nama         = fd.get("nama") as string;
+  const tanggal_lahir = fd.get("tanggal_lahir") as string;
+  const jenis_kelamin = fd.get("jenis_kelamin") as string;
+  const pekerjaan    = fd.get("pekerjaan") as string;
+  const jabatan      = fd.get("jabatan") as string;
+  const nomor_hp     = fd.get("nomor_hp") as string;
+  const bersedia     = fd.get("bersedia") === "1" ? 1 : 0;
 
-  // jawaban dikirim sebagai JSON object dengan key string ("1","2",...)
   let totalScore = 0;
   const q: number[] = [];
   for (let i = 1; i <= 27; i++) {
-    const val = Number(jawaban[String(i)] ?? jawaban[i] ?? 0);
+    const val = Number(fd.get(`q${i}`) ?? 0);
     q.push(val);
     totalScore += val;
   }
+
   const rataRata = totalScore / 27;
   const kategori = hitungKategori(rataRata).label;
 
-  // 7 info + 27 soal + 2 skor = 36 parameter
   const cols = [
     "nama","tanggal_lahir","jenis_kelamin","pekerjaan","jabatan","nomor_hp","bersedia",
     "q1","q2","q3","q4","q5","q6","q7","q8","q9","q10","q11","q12","q13","q14",
@@ -33,7 +38,7 @@ export async function action({ request, context }: Route.ActionArgs) {
   ];
   const placeholders = cols.map(() => "?").join(", ");
   const vals: (string | number)[] = [
-    nama, tanggal_lahir, jenis_kelamin, pekerjaan, jabatan, nomor_hp, bersedia ? 1 : 0,
+    nama, tanggal_lahir, jenis_kelamin, pekerjaan, jabatan, nomor_hp, bersedia,
     ...q,
     Math.round(rataRata * 100) / 100,
     kategori,
@@ -44,73 +49,77 @@ export async function action({ request, context }: Route.ActionArgs) {
     .bind(...vals)
     .run();
 
-  return Response.json({ id: result.meta?.last_row_id ?? 0 });
+  return { id: result.meta?.last_row_id ?? 0 };
 }
 
 export default function Submit() {
   const navigate = useNavigate();
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
+  const fetcher = useFetcher<{ id: number }>();
   const [ringkasan, setRingkasan] = useState<{ nama: string; skor: number }[]>([]);
+  const [formFields, setFormFields] = useState<Record<string, string>>({});
+  const [validationError, setValidationError] = useState("");
 
+  const loading = fetcher.state !== "idle";
+
+  // Navigasi ke hasil setelah submit berhasil
   useEffect(() => {
-    const raw = sessionStorage.getItem("jawaban");
-    if (!raw) return;
-    const jawaban = JSON.parse(raw);
+    if (fetcher.state === "idle" && fetcher.data?.id) {
+      sessionStorage.removeItem("consent_data");
+      sessionStorage.removeItem("jawaban");
+      navigate(`/hasil/${fetcher.data.id}`);
+    }
+  }, [fetcher.state, fetcher.data]);
+
+  // Load data dari sessionStorage
+  useEffect(() => {
+    const consentRaw = sessionStorage.getItem("consent_data");
+    const jawabanRaw = sessionStorage.getItem("jawaban");
+
+    if (!consentRaw) { navigate("/consent"); return; }
+    if (!jawabanRaw) { navigate("/kuesioner/1"); return; }
+
+    const consent = JSON.parse(consentRaw);
+    const jawaban = JSON.parse(jawabanRaw);
+
+    // Hitung ringkasan
     const r = DOMAINS.map(d => {
-      const total = d.pertanyaan.reduce((s, p) => s + (jawaban[p.id] ?? 0), 0);
+      const total = d.pertanyaan.reduce((s, p) => s + (Number(jawaban[String(p.id)] ?? jawaban[p.id] ?? 0)), 0);
       const rata = total / d.pertanyaan.length;
       return { nama: d.nama, skor: Math.round(rata * 100) / 100 };
     });
     setRingkasan(r);
 
-    // Cek consent
-    const consent = sessionStorage.getItem("consent_data");
-    if (!consent) navigate("/consent");
+    // Siapkan semua field untuk form hidden
+    const fields: Record<string, string> = {
+      nama:          consent.nama,
+      tanggal_lahir: consent.tanggal_lahir,
+      jenis_kelamin: consent.jenis_kelamin,
+      pekerjaan:     consent.pekerjaan,
+      jabatan:       consent.jabatan,
+      nomor_hp:      consent.nomor_hp,
+      bersedia:      consent.bersedia,
+    };
+    for (let i = 1; i <= 27; i++) {
+      fields[`q${i}`] = String(jawaban[String(i)] ?? jawaban[i] ?? 0);
+    }
+    setFormFields(fields);
   }, []);
 
-  async function handleSubmit() {
-    const consentRaw = sessionStorage.getItem("consent_data");
-    const jawabanRaw = sessionStorage.getItem("jawaban");
-
-    if (!consentRaw || !jawabanRaw) {
-      navigate("/consent");
-      return;
-    }
-
-    const consent = JSON.parse(consentRaw);
-    const jawaban = JSON.parse(jawabanRaw);
-
+  function handleSubmit() {
     const allIds = DOMAINS.flatMap(d => d.pertanyaan.map(p => p.id));
-    const missing = allIds.filter(id => jawaban[id] === undefined);
+    const jawabanRaw = sessionStorage.getItem("jawaban");
+    if (!jawabanRaw) { navigate("/consent"); return; }
+    const jawaban = JSON.parse(jawabanRaw);
+    const missing = allIds.filter(id => jawaban[String(id)] === undefined && jawaban[id] === undefined);
     if (missing.length > 0) {
-      setError(`Masih ada ${missing.length} pertanyaan yang belum dijawab. Harap kembali dan lengkapi.`);
+      setValidationError(`Masih ada ${missing.length} pertanyaan yang belum dijawab. Harap kembali dan lengkapi.`);
       return;
     }
 
-    setLoading(true);
-    try {
-      const res = await fetch("/submit", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          ...consent,
-          bersedia: consent.bersedia === "1",
-          jawaban,
-        }),
-      });
-
-      if (!res.ok) throw new Error("Gagal menyimpan data");
-      const data = (await res.json()) as { id: number };
-
-      sessionStorage.removeItem("consent_data");
-      sessionStorage.removeItem("jawaban");
-
-      navigate(`/hasil/${data.id}`);
-    } catch (e: any) {
-      setError(e.message ?? "Terjadi kesalahan");
-      setLoading(false);
-    }
+    // Submit via fetcher (FormData)
+    const fd = new FormData();
+    Object.entries(formFields).forEach(([k, v]) => fd.append(k, v));
+    fetcher.submit(fd, { method: "post", action: "/submit" });
   }
 
   return (
@@ -124,9 +133,9 @@ export default function Submit() {
           </div>
 
           <div className="p-6">
-            {error && (
+            {validationError && (
               <div className="bg-red-50 border border-red-200 rounded-xl p-4 mb-4 text-sm text-red-700">
-                ⚠️ {error}
+                ⚠️ {validationError}
               </div>
             )}
 
@@ -139,15 +148,11 @@ export default function Submit() {
                     <span className="text-gray-600">{r.nama}</span>
                     <div className="flex items-center gap-2">
                       <span className="font-mono text-gray-800">{r.skor.toFixed(2)}</span>
-                      <span
-                        className={`px-2 py-0.5 rounded-full text-xs font-medium ${
-                          kat.warna === "red"
-                            ? "bg-red-100 text-red-700"
-                            : kat.warna === "yellow"
-                            ? "bg-yellow-100 text-yellow-700"
-                            : "bg-green-100 text-green-700"
-                        }`}
-                      >
+                      <span className={`px-2 py-0.5 rounded-full text-xs font-medium ${
+                        kat.warna === "red" ? "bg-red-100 text-red-700" :
+                        kat.warna === "yellow" ? "bg-yellow-100 text-yellow-700" :
+                        "bg-green-100 text-green-700"
+                      }`}>
                         {kat.label}
                       </span>
                     </div>
@@ -163,13 +168,14 @@ export default function Submit() {
             <div className="flex gap-3">
               <button
                 onClick={() => navigate(`/kuesioner/${DOMAINS.length}`)}
-                className="flex-1 py-3 border border-gray-300 text-gray-600 rounded-xl text-sm font-medium hover:bg-gray-50 transition-colors"
+                disabled={loading}
+                className="flex-1 py-3 border border-gray-300 text-gray-600 rounded-xl text-sm font-medium hover:bg-gray-50 transition-colors disabled:opacity-50"
               >
                 ← Tinjau Ulang
               </button>
               <button
                 onClick={handleSubmit}
-                disabled={loading}
+                disabled={loading || Object.keys(formFields).length === 0}
                 className="flex-1 bg-green-600 hover:bg-green-700 disabled:bg-gray-400 text-white py-3 rounded-xl text-sm font-semibold transition-colors"
               >
                 {loading ? "Menyimpan..." : "Kirim Jawaban ✓"}
