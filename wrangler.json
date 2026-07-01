@@ -3,7 +3,9 @@
 	"name": "kuesioner-rme-jambi",
 	"main": "./workers/app.ts",
 	"compatibility_date": "2025-10-08",
-	"compatibility_flags": ["nodejs_compat"],
+	"compatibility_flags": [
+		"nodejs_compat"
+	],
 	"observability": {
 		"enabled": true
 	},
@@ -12,7 +14,7 @@
 		{
 			"binding": "DB",
 			"database_name": "kuesioner-rme-db",
-			"database_id": "placeholder-ganti-setelah-create"
+			"database_id": "ee8a1afb-36e1-49d2-a114-a33be5e724dd"
 		}
 	]
 }
