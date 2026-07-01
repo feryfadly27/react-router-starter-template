@@ -1,5 +1,5 @@
 import type { Route } from "./+types/kuesioner.$step";
-import { useNavigate, useParams } from "react-router";
+import { useNavigate, useParams, useFetcher } from "react-router";
 import { useState, useEffect } from "react";
 import { DOMAINS, TOTAL_PERTANYAAN } from "../data/kuesioner";
 
@@ -17,20 +17,24 @@ export default function KuesionerStep() {
 
   const [jawaban, setJawaban] = useState<Record<number, number>>({});
   const [errors, setErrors] = useState<number[]>([]);
+  const fetcher = useFetcher<{ id: number }>();
+  const isSubmitting = fetcher.state !== "idle";
 
   useEffect(() => {
-    // Pastikan consent sudah diisi
     const consent = sessionStorage.getItem("consent_data");
-    if (!consent) {
-      navigate("/consent");
-      return;
-    }
-    // Load jawaban yang sudah tersimpan
+    if (!consent) { navigate("/consent"); return; }
     const saved = sessionStorage.getItem("jawaban");
-    if (saved) {
-      setJawaban(JSON.parse(saved));
-    }
+    if (saved) setJawaban(JSON.parse(saved));
   }, []);
+
+  // Setelah submit berhasil, bersihkan session dan ke terima kasih
+  useEffect(() => {
+    if (fetcher.state === "idle" && fetcher.data?.id) {
+      sessionStorage.removeItem("consent_data");
+      sessionStorage.removeItem("jawaban");
+      navigate("/terima-kasih");
+    }
+  }, [fetcher.state, fetcher.data]);
 
   if (!domain) {
     return <div className="p-8 text-center text-red-500">Domain tidak ditemukan.</div>;
@@ -62,7 +66,23 @@ export default function KuesionerStep() {
       navigate(`/kuesioner/${stepNum + 1}`);
       window.scrollTo(0, 0);
     } else {
-      navigate("/submit");
+      // Domain terakhir — langsung submit ke action /submit
+      const consentRaw = sessionStorage.getItem("consent_data");
+      if (!consentRaw) { navigate("/consent"); return; }
+      const consent = JSON.parse(consentRaw);
+
+      const fd = new FormData();
+      fd.append("nama",          consent.nama);
+      fd.append("tanggal_lahir", consent.tanggal_lahir);
+      fd.append("jenis_kelamin", consent.jenis_kelamin);
+      fd.append("pekerjaan",     consent.pekerjaan);
+      fd.append("jabatan",       consent.jabatan);
+      fd.append("nomor_hp",      consent.nomor_hp);
+      fd.append("bersedia",      consent.bersedia);
+      for (let i = 1; i <= 27; i++) {
+        fd.append(`q${i}`, String(jawaban[i] ?? 0));
+      }
+      fetcher.submit(fd, { method: "post", action: "/submit" });
     }
   }
 
@@ -203,16 +223,22 @@ export default function KuesionerStep() {
             <button
               type="button"
               onClick={handlePrev}
-              className="flex-1 py-3 border border-gray-300 text-gray-600 rounded-xl text-sm font-medium hover:bg-gray-50 transition-colors"
+              disabled={isSubmitting}
+              className="flex-1 py-3 border border-gray-300 text-gray-600 rounded-xl text-sm font-medium hover:bg-gray-50 transition-colors disabled:opacity-50"
             >
               ← Sebelumnya
             </button>
             <button
               type="button"
               onClick={handleNext}
-              className={`flex-1 ${warnaBg} hover:opacity-90 text-white py-3 rounded-xl text-sm font-semibold transition-all`}
+              disabled={isSubmitting}
+              className={`flex-1 ${warnaBg} hover:opacity-90 disabled:opacity-70 text-white py-3 rounded-xl text-sm font-semibold transition-all`}
             >
-              {stepNum < totalDomains ? "Selanjutnya →" : "Selesai & Kirim →"}
+              {isSubmitting
+                ? "Menyimpan..."
+                : stepNum < totalDomains
+                ? "Selanjutnya →"
+                : "Kirim Jawaban ✓"}
             </button>
           </div>
         </div>
