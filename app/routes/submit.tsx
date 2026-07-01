@@ -13,36 +13,35 @@ export async function action({ request, context }: Route.ActionArgs) {
 
   const { nama, tanggal_lahir, jenis_kelamin, pekerjaan, jabatan, nomor_hp, bersedia, jawaban } = body;
 
+  // jawaban dikirim sebagai JSON object dengan key string ("1","2",...)
   let totalScore = 0;
-  const qValues: Record<string, number> = {};
+  const q: number[] = [];
   for (let i = 1; i <= 27; i++) {
-    const val = jawaban[i] ?? 0;
-    qValues[`q${i}`] = val;
+    const val = Number(jawaban[String(i)] ?? jawaban[i] ?? 0);
+    q.push(val);
     totalScore += val;
   }
   const rataRata = totalScore / 27;
   const kategori = hitungKategori(rataRata).label;
 
+  // 7 info + 27 soal + 2 skor = 36 parameter
+  const cols = [
+    "nama","tanggal_lahir","jenis_kelamin","pekerjaan","jabatan","nomor_hp","bersedia",
+    "q1","q2","q3","q4","q5","q6","q7","q8","q9","q10","q11","q12","q13","q14",
+    "q15","q16","q17","q18","q19","q20","q21","q22","q23","q24","q25","q26","q27",
+    "total_score","kategori",
+  ];
+  const placeholders = cols.map(() => "?").join(", ");
+  const vals: (string | number)[] = [
+    nama, tanggal_lahir, jenis_kelamin, pekerjaan, jabatan, nomor_hp, bersedia ? 1 : 0,
+    ...q,
+    Math.round(rataRata * 100) / 100,
+    kategori,
+  ];
+
   const result = await db
-    .prepare(
-      `INSERT INTO responses (
-        nama, tanggal_lahir, jenis_kelamin, pekerjaan, jabatan, nomor_hp, bersedia,
-        q1,q2,q3,q4,q5,q6,q7,q8,q9,q10,q11,q12,q13,q14,
-        q15,q16,q17,q18,q19,q20,q21,q22,q23,q24,q25,q26,q27,
-        total_score, kategori
-      ) VALUES (
-        ?,?,?,?,?,?,?,
-        ?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,
-        ?,?,?,?,?,?,?,?,?,?,?,?,?,
-        ?,?
-      )`
-    )
-    .bind(
-      nama, tanggal_lahir, jenis_kelamin, pekerjaan, jabatan, nomor_hp, bersedia ? 1 : 0,
-      ...Array.from({ length: 27 }, (_, i) => qValues[`q${i + 1}`]),
-      Math.round(rataRata * 100) / 100,
-      kategori
-    )
+    .prepare(`INSERT INTO responses (${cols.join(", ")}) VALUES (${placeholders})`)
+    .bind(...vals)
     .run();
 
   return Response.json({ id: result.meta?.last_row_id ?? 0 });
