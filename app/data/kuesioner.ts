@@ -22,11 +22,11 @@ export const DOMAINS: Domain[] = [
     pertanyaan: [
       {
         id: 1,
-        teks: "Pandangan mengenai Rekam Medis Elektronik",
+        teks: "Bagaimana pandangan organisasi terhadap penerapan Rekam Medis Elektronik (RME)?",
         pilihan: [
-          { nilai: 0, teks: "Penggunaan teknologi informasi hanya untuk 'paperless' saja" },
+          { nilai: 0, teks: "Penggunaan teknologi informasi hanya untuk “paperless” saja" },
           { nilai: 1, teks: "Penggunaan teknologi informasi hanya di bagian rekam medis dengan aplikasi" },
-          { nilai: 2, teks: "Sebagai teknologi klinik untuk efisiensi alur kerja" },
+          { nilai: 2, teks: "Sebagai teknologi klinik untuk efesiensi alur kerja" },
           { nilai: 3, teks: "Data dapat diakses cepat dan dimana saja" },
           { nilai: 4, teks: "Kemajuan teknologi untuk tujuan meningkatkan pelayanan kesehatan yang berkualitas" },
           { nilai: 5, teks: "Mengintegrasikan data dari berbagai sumber, pendukung pelayanan kesehatan yang berkualitas dan keputusan klinis" },
@@ -34,7 +34,7 @@ export const DOMAINS: Domain[] = [
       },
       {
         id: 2,
-        teks: "Proses perencanaan terkait Rekam Medis Elektronik terdiri atas",
+        teks: "Siapa saja yang terlibat dalam proses perencanaan Rekam Medis Elektronik (RME)?",
         pilihan: [
           { nilai: 0, teks: "Manajemen puncak (Top Manajemen) saja" },
           { nilai: 1, teks: "Manajemen puncak (Top Manajemen) dan atau tim yang terpilih" },
@@ -46,7 +46,7 @@ export const DOMAINS: Domain[] = [
       },
       {
         id: 3,
-        teks: "Keterlibatan staf medis dalam proses Rekam Medis Elektronik",
+        teks: "Bagaimana tingkat keterlibatan staf medis dalam proses penerapan Rekam Medis Elektronik (RME)?",
         pilihan: [
           { nilai: 0, teks: "Tidak melibatkan staf medis dalam proses penerapan Rekam Medis Elektronik" },
           { nilai: 1, teks: "Terbatas pada staf medis dan staf dengan kewenangan klinis untuk mewakili kepentingan klinis" },
@@ -58,14 +58,14 @@ export const DOMAINS: Domain[] = [
       },
       {
         id: 4,
-        teks: "Pembahasan utama terkait kerangka kerja untuk menguraikan prioritas Rekam Medis Elektronik",
+        teks: "Bagaimana pembahasan dan dokumentasi kerangka kerja yang digunakan untuk menguraikan prioritas penerapan Rekam Medis Elektronik (RME)?",
         pilihan: [
           { nilai: 0, teks: "Belum dibahas" },
           { nilai: 1, teks: "Telah dibahas namun belum menyeluruh" },
           { nilai: 2, teks: "Telah dibahas secara menyeluruh" },
           { nilai: 3, teks: "Telah dibahas tetapi tidak didokumentasikan sebelum memulai evaluasi vendor (pihak penyedia sistem)" },
-          { nilai: 4, teks: "Telah didokumentasikan sebelum memulai evaluasi vendor, namun belum digunakan untuk memfasilitasi proses pengambilan Keputusan" },
-          { nilai: 5, teks: "Telah didokumentasikan sebelum memulai evaluasi vendor dan digunakan untuk memfasilitasi proses pengambilan Keputusan" },
+          { nilai: 4, teks: "Telah didokumentasikan sebelum memulai evaluasi vendor (pihak penyedia sistem), namun belum digunakan untuk memfasilitasi proses pengambilan Keputusan" },
+          { nilai: 5, teks: "Telah didokumentasikan sebelum memulai evaluasi vendor (pihak penyedia sistem) dan digunakan untuk memfasilitasi proses pengambilan Keputusan." },
         ],
       },
     ],
@@ -76,10 +76,10 @@ export const DOMAINS: Domain[] = [
     pertanyaan: [
       {
         id: 5,
-        teks: "Kepemimpinan",
+        teks: "Bagaimana tingkat kepemimpinan organisasi dalam mendukung penerapan Rekam Medis Elektronik (RME)?",
         pilihan: [
-          { nilai: 0, teks: "Percaya Rekam Medis Elektronik diperlukan, tetapi belum dibagi mengenai bagaimana pelaksanaan, tujuan dan kapan harus tercapai tujuan utama" },
-          { nilai: 1, teks: "Percaya Rekam Medis Elektronik diperlukan dan dibagi mengenai bagaimana pelaksanaan tujuan dan kapan harus tercapai tujuan utama" },
+          { nilai: 0, teks: "Percaya Rekam Medis Elektronik diperlukan, tetapi belum dibagi mengenai bagaimana pelaksaaan, tujuan dan kapan harus tercapai tujuan utama" },
+          { nilai: 1, teks: "Percaya Rekam Medis Elektronik diperlukan dan dibagi mengenai bagaimana pelaksaaan tujuan dan kapan harus tercapai tujuan utama" },
           { nilai: 2, teks: "Telah mempelajari pro dan kontra penerapan Rekam Medis Elektronik" },
           { nilai: 3, teks: "Telah mempelajari pro dan kontra penerapan Rekam Medis Elektronik dan dapat membuat argumen bahwa manfaat yang ditimbulkan akan lebih besar daripada biaya yang akan dikeluarkan" },
           { nilai: 4, teks: "Memahami manfaat Rekam Medis Elektronik, namun belum menetapkan visi yang jelas" },
@@ -88,7 +88,7 @@ export const DOMAINS: Domain[] = [
       },
       {
         id: 6,
-        teks: "Tim Pengambil Keputusan",
+        teks: "Bagaimana peran tim pengambil keputusan dalam proses perencanaan penerapan Rekam Medis Elektronik (RME)?",
         pilihan: [
           { nilai: 0, teks: "Bergantung pada vendor untuk memberikan panduan perencanaan Rekam Medis Elektronik" },
           { nilai: 1, teks: "Bergantung pada vendor untuk memberikan panduan perencanaan Rekam Medis Elektronik, tetapi tim terpilih mulai ikut berpartisipasi" },
@@ -106,7 +106,7 @@ export const DOMAINS: Domain[] = [
     pertanyaan: [
       {
         id: 7,
-        teks: "Teknologi Informasi dalam perencanaan strategis harus memiliki",
+        teks: "Bagaimana peran teknologi informasi dalam proses perencanaan strategis organisasi terkait penerapan Rekam Medis Elektronik (RME)?",
         pilihan: [
           { nilai: 0, teks: "Tidak dianggap sebagai bagian dari proses perencanaan strategi" },
           { nilai: 1, teks: "Dianggap sebagai perencanaan strategis dan operasional yang ditangani melalui proyek khusus" },
@@ -118,7 +118,7 @@ export const DOMAINS: Domain[] = [
       },
       {
         id: 8,
-        teks: "Definisi kualitas dan efisiensi meliputi",
+        teks: "Bagaimana organisasi mendefinisikan dan mendokumentasikan tujuan kualitas dan efisiensi dalam kaitannya dengan penerapan Rekam Medis Elektronik (RME)?",
         pilihan: [
           { nilai: 0, teks: "Belum dibahas" },
           { nilai: 1, teks: "Sudah dibahas, tetapi tidak jelas tujuan organisasinya dan tidak terhubung dengan teknologi Rekam Medis Elektronik" },
@@ -136,7 +136,7 @@ export const DOMAINS: Domain[] = [
     pertanyaan: [
       {
         id: 9,
-        teks: "Optimalisasi penggunaan sistem dalam manajemen pelayanan pasien",
+        teks: "Bagaimana tingkat optimalisasi penggunaan sistem Rekam Medis Elektronik (RME) dalam mendukung manajemen pelayanan pasien?",
         pilihan: [
           { nilai: 0, teks: "Belum dioptimalkan atau digunakan untuk manajemen pelayanan pasien" },
           { nilai: 1, teks: "Sudah mulai dioptimalkan atau digunakan untuk manajemen pelayanan pasien" },
@@ -148,7 +148,7 @@ export const DOMAINS: Domain[] = [
       },
       {
         id: 10,
-        teks: "Laporan yang dihasilkan Rekam Medis Elektronik dapat digunakan manajemen, pelaporan data dan peningkatan kualitas",
+        teks: "Bagaimana tingkat pendefinisian dan dokumentasi laporan yang dihasilkan oleh Rekam Medis Elektronik (RME) untuk mendukung manajemen, pelaporan data, dan peningkatan mutu pelayanan?",
         pilihan: [
           { nilai: 0, teks: "Belum didefinisikan atau didokumentasikan" },
           { nilai: 1, teks: "Sudah direncanakan untuk didefinisikan atau didokumentasikan" },
@@ -166,19 +166,19 @@ export const DOMAINS: Domain[] = [
     pertanyaan: [
       {
         id: 11,
-        teks: "Staf dan sumber daya manusia lainnya yang didedikasikan untuk kontrak dengan pihak ketiga penyedia sistem",
+        teks: "Bagaimana tingkat kompetensi dan keterlibatan staf atau sumber daya manusia yang didedikasikan untuk pengelolaan kontrak dengan pihak ketiga (vendor) dalam penerapan Rekam Medis Elektronik (RME)?",
         pilihan: [
-          { nilai: 0, teks: "Terlibat dalam aspek-aspek spesifik dalam proses pengambilan keputusan RME tetapi tidak memiliki pengalaman dalam pemilihan vendor atau negosiasi" },
-          { nilai: 1, teks: "Terlibat dalam aspek-aspek spesifik dalam proses pengambilan keputusan RME tetapi tidak memiliki pengalaman dalam pemilihan vendor atau negosiasi terkait produk" },
+          { nilai: 0, teks: "Terlibat dalam aspek-aspek spesifik dalam proses pengambilan keputusan Rekam Medis Elektronik tetapi tidak memiliki pengalaman dalam pemilihan vendor atau negosiasi" },
+          { nilai: 1, teks: "Terlibat dalam aspek-aspek spesifik dalam proses pengambilan keputusan Rekam Medis Elektronik tetapi tidak memiliki pengalaman dalam pemilihan vendor atau negosiasi terkait produk" },
           { nilai: 2, teks: "Memiliki pemahaman umum tentang produk yang disediakan oleh penyedia layanan tetapi tidak memiliki pengalaman pemilihan vendor atau negosiasi" },
           { nilai: 3, teks: "Memiliki pemahaman umum tentang produk tetapi mungkin tidak memiliki pengalaman pemilihan vendor atau negosiasi; produk yang tersedia telah digunakan sebagai pedoman untuk menentukan persyaratan prioritas tinggi" },
           { nilai: 4, teks: "Berpengalaman dalam kontrak vendor, menggerakkan analisis kemampuan produk untuk memenuhi kebutuhan dan kemampuan klinik serta menentukan pendekatan dan ketentuan kontrak yang optimal" },
-          { nilai: 5, teks: "Berpengalaman dalam kontrak vendor; persyaratan klinik telah didokumentasikan dalam perjanjian kerjasama secara terperinci sebagai tambahan kontrak" },
+          { nilai: 5, teks: "Berpengalaman dalam kontrak vendor, menggerakkan analisis kemampuan produk untuk memenuhi kebutuhan dan kemampuan klinik serta menentukan pendekatan dan ketentuan kontrak yang optimal; persyaratan klinik telah didokumentasikan dalam perjanjian kerjasama secara terperinci sebagai tambahan kontrak" },
         ],
       },
       {
         id: 12,
-        teks: "Kebutuhan staf untuk implementasi dan penggunaan Rekam Medis Elektronik",
+        teks: "Bagaimana tingkat analisis dan perencanaan kebutuhan staf untuk implementasi dan penggunaan Rekam Medis Elektronik (RME)?",
         pilihan: [
           { nilai: 0, teks: "Belum dianalisis" },
           { nilai: 1, teks: "Telah dianalisis" },
@@ -190,14 +190,14 @@ export const DOMAINS: Domain[] = [
       },
       {
         id: 13,
-        teks: "Staf yang didedikasikan untuk manajemen proyek, manajemen perubahan, dan peningkatan kualitas untuk Rekam Medis Elektronik",
+        teks: "Bagaimana tingkat kesiapan dan kompetensi staf yang didedikasikan untuk manajemen proyek, manajemen perubahan, dan peningkatan kualitas dalam penerapan Rekam Medis Elektronik (RME)?",
         pilihan: [
           { nilai: 0, teks: "Belum diidentifikasi secara spesifik" },
           { nilai: 1, teks: "Telah dilakukan identifikasi" },
           { nilai: 2, teks: "Hanya memiliki pemahaman dasar tentang fungsi Rekam Medis Elektronik" },
           { nilai: 3, teks: "Memiliki pemahaman dasar tentang fungsi Rekam Medis Elektronik dan menunjang dalam proses pengambilan keputusan" },
-          { nilai: 4, teks: "Berpengalaman, telah dididik tentang fungsi RME dan dampak alur kerja, namun belum diberi kewenangan untuk memimpin proses pengambilan Keputusan" },
-          { nilai: 5, teks: "Berpengalaman, telah dididik tentang fungsi RME dan dampak alur kerja serta diberi kewenangan untuk memimpin proses pengambilan Keputusan" },
+          { nilai: 4, teks: "Berpengalaman, telah dididik tentang fungsi Rekam Medis Elektronik dan dampak alur kerja, namun belum diberi kewenangan untuk memimpin proses pengambilan Keputusan" },
+          { nilai: 5, teks: "Berpengalaman, telah dididik tentang fungsi Rekam Medis Elektronik dan dampak alur kerja serta diberi kewenangan untuk memimpin proses pengambilan Keputusan" },
         ],
       },
     ],
@@ -208,19 +208,19 @@ export const DOMAINS: Domain[] = [
     pertanyaan: [
       {
         id: 14,
-        teks: "Rencana pelatihan formal",
+        teks: "Bagaimana perencanaan pelatihan formal dalam mendukung implementasi Rekam Medis Elektronik (RME)?",
         pilihan: [
           { nilai: 0, teks: "Bukan bagian dari proses perencanaan" },
           { nilai: 1, teks: "Staf klinis dan administrasi akan menerima pelatihan dari vendor dan di tempat kerja" },
-          { nilai: 2, teks: "Termasuk implementasi RME dan kesenjangan keterampilan untuk dokter dan tenaga medis yang diperlukan saja" },
-          { nilai: 3, teks: "Termasuk implementasi RME dan kesenjangan keterampilan untuk dokter, tenaga medis, dan staf adalah bagian dari proses perencanaan" },
-          { nilai: 4, teks: "Termasuk implementasi RME, pelatihan keterampilan untuk manajemen, dokter, dan staf adalah bagian dari proses perencanaan" },
-          { nilai: 5, teks: "Termasuk implementasi RME, desain ulang alur kerja, dan kesenjangan keterampilan untuk manajemen, dokter, dan staf adalah bagian dari proses perencanaan" },
+          { nilai: 2, teks: "Termasuk implementasi Rekam Medis Elektronik dan kesenjangan keterampilan untuk dokter dan tenaga medis yang diperlukan saja" },
+          { nilai: 3, teks: "Termasuk implementasi Rekam Medis Elektronik dan kesenjangan keterampilan untuk dokter, tenaga medis, dan staf adalah bagian dari proses perencanaan" },
+          { nilai: 4, teks: "Termasuk implementasi Rekam Medis Elektronik, pelatihan keterampilan untuk manajemen, dokter, dan staf adalah bagian dari proses perencanaan" },
+          { nilai: 5, teks: "Termasuk implementasi Rekam Medis Elektronik, desain ulang alur kerja, dan kesenjangan keterampilan untuk manajemen, dokter, dan staf adalah bagian dari proses perencanaan" },
         ],
       },
       {
         id: 15,
-        teks: "Program pelatihan untuk manajer proyek dan staf TI yang terlibat dalam adopsi Rekam Medis Elektronik",
+        teks: "Bagaimana perencanaan dan pelaksanaan program pelatihan bagi manajer proyek dan staf teknologi informasi yang terlibat dalam adopsi Rekam Medis Elektronik (RME)?",
         pilihan: [
           { nilai: 0, teks: "Belum dimasukkan sebagai bagian dari inisiatif Rekam Medis Elektronik" },
           { nilai: 1, teks: "Akan dimasukkan sebagai bagian dari inisiatif Rekam Medis Elektronik" },
@@ -238,7 +238,7 @@ export const DOMAINS: Domain[] = [
     pertanyaan: [
       {
         id: 16,
-        teks: "Proses administrasi dan klinis yang akan dimasukkan dalam RME saat ini dan yang diusulkan, termasuk perkiraan volume peningkatan jumlah pasien dan kepegawaian",
+        teks: "Bagaimana tingkat perencanaan dan dokumentasi proses administrasi serta proses klinis yang akan diintegrasikan ke dalam Rekam Medis Elektronik (RME), termasuk proyeksi peningkatan jumlah pasien dan kebutuhan sumber daya manusia?",
         pilihan: [
           { nilai: 0, teks: "Tidak dikembangkan" },
           { nilai: 1, teks: "Telah dipertimbangkan tetapi belum dianalisis" },
@@ -250,7 +250,7 @@ export const DOMAINS: Domain[] = [
       },
       {
         id: 17,
-        teks: "Kebijakan, prosedur, dan protokol yang diperlukan untuk proses yang harus digunakan dalam pengelolaan Rekam Medis Elektronik",
+        teks: "Bagaimana tingkat pengembangan kebijakan, prosedur, dan protokol yang diperlukan dalam pengelolaan Rekam Medis Elektronik (RME)?",
         pilihan: [
           { nilai: 0, teks: "Belum dipertimbangkan" },
           { nilai: 1, teks: "Telah dipertimbangkan tetapi belum dianalisis" },
@@ -268,7 +268,7 @@ export const DOMAINS: Domain[] = [
     pertanyaan: [
       {
         id: 18,
-        teks: "Peran dan tanggung jawab untuk menganalisis produk, ketentuan kontrak, dan bernegosiasi dengan vendor",
+        teks: "Bagaimana kejelasan penetapan peran dan tanggung jawab dalam menganalisis produk, menyusun ketentuan kontrak, dan melakukan negosiasi dengan vendor pada penerapan Rekam Medis Elektronik (RME)?",
         pilihan: [
           { nilai: 0, teks: "Belum dianalisis" },
           { nilai: 1, teks: "Akan dibentuk dan ditugaskan; kemungkinan akan ada dalam kelompok tim manajemen" },
@@ -286,7 +286,7 @@ export const DOMAINS: Domain[] = [
     pertanyaan: [
       {
         id: 19,
-        teks: "Anggapan terkait teknologi dalam Rekam Medis Elektronik",
+        teks: "Bagaimana pandangan organisasi terhadap investasi teknologi dalam penerapan Rekam Medis Elektronik (RME)?",
         pilihan: [
           { nilai: 0, teks: "Pengeluaran lebih besar daripada investasinya" },
           { nilai: 1, teks: "Lebih banyak pengeluaran daripada investasi yang membutuhkan pengembalian investasi berdasarkan TI tradisional atau model otomatisasi kantor" },
@@ -298,7 +298,7 @@ export const DOMAINS: Domain[] = [
       },
       {
         id: 20,
-        teks: "Akuisisi RME dan pemeliharaan berkelanjutan",
+        teks: "Bagaimana kesiapan pendanaan untuk akuisisi dan pemeliharaan berkelanjutan Rekam Medis Elektronik (RME)?",
         pilihan: [
           { nilai: 0, teks: "Dana belum diidentifikasi" },
           { nilai: 1, teks: "Dana mulai direncanakan" },
@@ -316,7 +316,7 @@ export const DOMAINS: Domain[] = [
     pertanyaan: [
       {
         id: 21,
-        teks: "Interaksi pasien dengan Rekam Medis Elektronik",
+        teks: "Bagaimana tingkat perencanaan interaksi pasien dalam penggunaan Rekam Medis Elektronik (RME)?",
         pilihan: [
           { nilai: 0, teks: "Belum dievaluasi" },
           { nilai: 1, teks: "Telah dipertimbangkan tetapi belum dianalisis" },
@@ -328,7 +328,7 @@ export const DOMAINS: Domain[] = [
       },
       {
         id: 22,
-        teks: "Kebijakan dan prosedur untuk koreksi atau akses pasien terhadap catatan medis elektronik dan pelepasan informasi pasien",
+        teks: "Bagaimana tingkat pengembangan kebijakan dan prosedur terkait akses, koreksi Rekam Medis Elektronik (RME), serta pelepasan informasi pasien?",
         pilihan: [
           { nilai: 0, teks: "Belum dievaluasi" },
           { nilai: 1, teks: "Telah dipertimbangkan tetapi belum dianalisis" },
@@ -340,7 +340,7 @@ export const DOMAINS: Domain[] = [
       },
       {
         id: 23,
-        teks: "Proses rujukan resep elektronik",
+        teks: "Bagaimana tingkat perencanaan proses rujukan resep elektronik dalam penerapan Rekam Medis Elektronik (RME)?",
         pilihan: [
           { nilai: 0, teks: "Belum dievaluasi" },
           { nilai: 1, teks: "Telah dipertimbangkan tetapi belum dianalisis" },
@@ -358,7 +358,7 @@ export const DOMAINS: Domain[] = [
     pertanyaan: [
       {
         id: 24,
-        teks: "Persyaratan manajemen teknologi informasi",
+        teks: "Bagaimana tingkat kesiapan manajemen teknologi informasi dalam mendukung implementasi Rekam Medis Elektronik (RME)?",
         pilihan: [
           { nilai: 0, teks: "Pengalaman terbatas dengan integrasi sistem saja" },
           { nilai: 1, teks: "Pengalaman terbatas dengan integrasi sistem atau konversi data, dan sangat bergantung pada sumber daya eksternal untuk perencanaan dan pengambilan keputusan tim IT" },
@@ -370,7 +370,7 @@ export const DOMAINS: Domain[] = [
       },
       {
         id: 25,
-        teks: "Penetapan staf IT dalam implementasi, pemeliharaan, infrastruktur, dan pengguna Rekam Medis Elektronik",
+        teks: "Bagaimana tingkat perencanaan dan penetapan staf teknologi informasi untuk mendukung implementasi, pemeliharaan, infrastruktur, dan penggunaan Rekam Medis Elektronik (RME)?",
         pilihan: [
           { nilai: 0, teks: "Belum dianalisis" },
           { nilai: 1, teks: "Sudah dianalisis namun secara umum belum dipahami" },
@@ -382,19 +382,25 @@ export const DOMAINS: Domain[] = [
       },
       {
         id: 26,
-        teks: "Staf IT...",
+        teks: "Bagaimana tingkat keterlibatan dan kesiapan staf IT dalam proses perencanaan dan implementasi Rekam Medis Elektronik (RME) di fasilitas pelayanan kesehatan?",
         pilihan: [
           { nilai: 0, teks: "Tidak dilibatkan dalam proses perencanaan" },
           { nilai: 1, teks: "Menentukan persyaratan infrastruktur TI tanpa keterlibatan dalam proses" },
           { nilai: 2, teks: "Terlibat dalam proses pengambilan keputusan saja" },
           { nilai: 3, teks: "Terlibat dalam proses pengambilan keputusan untuk menentukan persyaratan infrastruktur TI" },
-          { nilai: 4, teks: "Akan mengikuti pendidikan tentang tujuan RME untuk secara aktif terlibat dalam proses pengambilan keputusan RME dan menentukan persyaratan infrastruktur TI yang diperlukan" },
-          { nilai: 5, teks: "Telah dididik secara khusus tentang tujuan RME untuk secara aktif terlibat dalam proses pengambilan keputusan RME dan menentukan persyaratan infrastruktur TI yang diperlukan" },
+          { nilai: 4, teks: "Akan mengikuti pendidikan tentang tujuan Rekam Medis Elektronik untuk secara aktif terlibat dalam proses pengambilan keputusan Rekam Medis Elektronik dan menentukan persyaratan infrastruktur TI yang diperlukan" },
+          { nilai: 5, teks: "Telah dididik secara khusus tentang tujuan Rekam Medis Elektronik untuk secara aktif terlibat dalam proses pengambilan keputusan Rekam Medis Elektronik dan menentukan persyaratan infrastruktur TI yang diperlukan" },
         ],
       },
+    ],
+  },
+  {
+    nama: "Infrastruktur TI",
+    warna: "slate",
+    pertanyaan: [
       {
         id: 27,
-        teks: "Penilaian kebutuhan perangkat keras, terminal desktop dan perangkat lain yang diperlukan untuk mendukung penggunaan RME",
+        teks: "Bagaimana tingkat penilaian kebutuhan perangkat keras, terminal desktop, dan perangkat pendukung lainnya untuk mendukung implementasi dan penggunaan Rekam Medis Elektronik (RME)?",
         pilihan: [
           { nilai: 0, teks: "Tidak dipahami" },
           { nilai: 1, teks: "Secara umum dipahami tetapi belum dievaluasi" },
@@ -418,6 +424,18 @@ export function hitungSkorDomain(domain: Domain, jawaban: Record<number, number>
   const total = domain.pertanyaan.reduce((sum, p) => sum + (jawaban[p.id] ?? 0), 0);
   const rata = domain.pertanyaan.length > 0 ? total / domain.pertanyaan.length : 0;
   return rata;
+}
+
+/**
+ * Skor kesiapan keseluruhan = rata-rata dari skor rata-rata tiap domain.
+ * Setiap domain berbobot sama (bukan setiap soal), sehingga domain dengan
+ * jumlah soal berbeda tetap berkontribusi setara. Hasil dibulatkan 2 desimal.
+ */
+export function hitungSkorKeseluruhan(jawaban: Record<number, number>): number {
+  if (DOMAINS.length === 0) return 0;
+  const totalDomain = DOMAINS.reduce((sum, d) => sum + hitungSkorDomain(d, jawaban), 0);
+  const rata = totalDomain / DOMAINS.length;
+  return Math.round(rata * 100) / 100;
 }
 
 export const TOTAL_PERTANYAAN = DOMAINS.reduce((sum, d) => sum + d.pertanyaan.length, 0);

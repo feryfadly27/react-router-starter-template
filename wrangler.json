@@ -16,5 +16,11 @@
 			"database_name": "kuesioner-rme-db",
 			"database_id": "ee8a1afb-36e1-49d2-a114-a33be5e724dd"
 		}
+	],
+	"r2_buckets": [
+		{
+			"binding": "SIGNATURES",
+			"bucket_name": "kuesioner-signatures"
+		}
 	]
 }

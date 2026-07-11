@@ -7,48 +7,70 @@ export function meta({}: Route.MetaArgs) {
 
 export default function TerimaKasih() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-green-50 to-emerald-100 flex items-center justify-center p-4">
-      <div className="max-w-lg w-full bg-white rounded-2xl shadow-xl p-8 text-center">
+    <div className="min-h-screen flex items-center justify-center p-6" style={{ background: "#fcfaf7" }}>
+      <div className="max-w-lg w-full">
+        <div
+          className="rounded-xl overflow-hidden bg-white"
+          style={{ boxShadow: "0 4px 12px rgba(0,0,0,0.12)", border: "1px solid #e3e0dd" }}
+        >
+          {/* Top bar */}
+          <div className="h-1" style={{ background: "#fe6e00" }} />
 
-        <div className="flex justify-center mb-5">
-          <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center">
-            <svg className="w-10 h-10 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-            </svg>
+          <div className="p-8 text-center">
+            {/* Icon */}
+            <div
+              className="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-5"
+              style={{ background: "rgba(254,110,0,0.10)" }}
+            >
+              <svg className="w-8 h-8" style={{ color: "#fe6e00" }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+            </div>
+
+            <p className="text-xs font-semibold uppercase tracking-widest mb-2" style={{ color: "#fe6e00" }}>
+              Selesai
+            </p>
+            <h1 className="text-2xl font-bold mb-1" style={{ color: "#423d38" }}>
+              Terima Kasih!
+            </h1>
+            <p className="text-sm font-medium mb-6" style={{ color: "#797067" }}>
+              Jawaban Anda telah berhasil disimpan.
+            </p>
+
+            <div
+              className="rounded-lg p-5 mb-6 text-left"
+              style={{ background: "#fcfaf7", border: "1px solid #e3e0dd" }}
+            >
+              <p className="text-sm leading-relaxed" style={{ color: "#797067" }}>
+                Kami mengucapkan terima kasih yang sebesar-besarnya atas kesediaan Anda menjadi{" "}
+                <strong style={{ color: "#423d38" }}>informan</strong> dalam penelitian ini. Partisipasi Anda
+                sangat berarti dan memberikan kontribusi nyata bagi pengembangan ilmu pengetahuan,
+                khususnya dalam bidang kesehatan.
+              </p>
+              <p className="text-sm leading-relaxed mt-3" style={{ color: "#797067" }}>
+                Informasi yang Anda berikan akan dijaga kerahasiaannya dan hanya digunakan untuk
+                keperluan penelitian.
+              </p>
+            </div>
+
+            <div className="text-xs mb-6" style={{ color: "#797067" }}>
+              Peneliti:{" "}
+              <span className="font-semibold" style={{ color: "#423d38" }}>Fery Fadly, SKM., MKM</span>
+              <br />
+              Kuesioner Kesiapan Penerapan Rekam Medis Elektronik (RME)
+            </div>
+
+            <Link
+              to="/"
+              className="flex items-center justify-center w-full h-10 rounded-md text-sm font-semibold text-white transition-colors"
+              style={{ background: "#fe6e00" }}
+              onMouseEnter={e => (e.currentTarget.style.background = "#ff6b00")}
+              onMouseLeave={e => (e.currentTarget.style.background = "#fe6e00")}
+            >
+              Kembali ke Beranda
+            </Link>
           </div>
         </div>
-
-        <h1 className="text-2xl font-bold text-gray-900 mb-2">
-          Terima Kasih!
-        </h1>
-        <p className="text-green-600 font-semibold mb-4">
-          Jawaban Anda telah berhasil disimpan.
-        </p>
-
-        <div className="bg-green-50 border border-green-100 rounded-xl p-5 mb-6 text-left">
-          <p className="text-sm text-gray-700 leading-relaxed">
-            Kami mengucapkan terima kasih yang sebesar-besarnya atas kesediaan Anda
-            menjadi <strong>informan</strong> dalam penelitian ini. Partisipasi Anda
-            sangat berarti dan memberikan kontribusi nyata bagi pengembangan ilmu
-            pengetahuan, khususnya dalam bidang kesehatan.
-          </p>
-          <p className="text-sm text-gray-700 leading-relaxed mt-3">
-            Informasi yang Anda berikan akan dijaga kerahasiaannya dan hanya
-            digunakan untuk keperluan penelitian.
-          </p>
-        </div>
-
-        <div className="text-xs text-gray-400 mb-6">
-          Peneliti: <span className="font-medium text-gray-500">Fery Fadly, SKM., MKM</span>
-          <br />Kuesioner Kesiapan Penerapan RME – RS Abdul Manap Kota Jambi
-        </div>
-
-        <Link
-          to="/"
-          className="inline-block w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-3 px-6 rounded-xl transition-colors duration-200"
-        >
-          Kembali ke Beranda
-        </Link>
       </div>
     </div>
   );

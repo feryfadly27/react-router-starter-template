@@ -50,21 +50,42 @@ export default function AdminLogin({ actionData }: Route.ComponentProps) {
   const [showPass, setShowPass] = useState(false);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-800 to-slate-900 flex items-center justify-center p-4">
+    <div
+      className="min-h-screen flex items-center justify-center p-4"
+      style={{ background: "#413830" }}
+    >
       <div className="w-full max-w-sm">
-        <div className="text-center mb-8">
-          <div className="inline-flex items-center justify-center w-16 h-16 bg-blue-600 rounded-2xl mb-4">
-            <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        {/* Logo mark */}
+        <div className="flex flex-col items-center mb-8">
+          <div
+            className="w-12 h-12 rounded-xl flex items-center justify-center mb-4"
+            style={{ background: "#fe6e00" }}
+          >
+            <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
             </svg>
           </div>
-          <h1 className="text-2xl font-bold text-white">Admin Panel</h1>
-          <p className="text-slate-400 text-sm mt-1">Kuesioner RME – RS Abdul Manap</p>
+          <h1 className="text-xl font-bold text-white">Admin Panel</h1>
+          <p className="text-sm mt-1" style={{ color: "rgba(255,255,255,0.50)" }}>
+            Kuesioner RME
+          </p>
         </div>
 
-        <div className="bg-white rounded-2xl shadow-2xl p-6">
+        {/* Card */}
+        <div
+          className="rounded-xl p-6"
+          style={{
+            background: "rgba(0,0,0,0.40)",
+            backdropFilter: "blur(12px)",
+            WebkitBackdropFilter: "blur(12px)",
+            border: "1px solid rgba(255,255,255,0.10)",
+          }}
+        >
           {error && (
-            <div className="bg-red-50 border border-red-200 rounded-xl p-3 mb-4 text-sm text-red-700 flex items-center gap-2">
+            <div
+              className="rounded-lg p-3 mb-5 text-sm flex items-center gap-2"
+              style={{ background: "rgba(251,44,54,0.15)", border: "1px solid rgba(251,44,54,0.30)", color: "#fca5a5" }}
+            >
               <svg className="w-4 h-4 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
                 <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
               </svg>
@@ -74,32 +95,59 @@ export default function AdminLogin({ actionData }: Route.ComponentProps) {
 
           <form method="post" className="space-y-4">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Username</label>
+              <label
+                className="block text-xs font-semibold uppercase tracking-wider mb-1.5"
+                style={{ color: "rgba(255,255,255,0.60)" }}
+              >
+                Username
+              </label>
               <input
                 type="text"
                 name="username"
                 autoComplete="username"
                 required
-                className="w-full border border-gray-300 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                 placeholder="Masukkan username"
+                className="w-full rounded-md px-3 h-10 text-sm outline-none transition-colors"
+                style={{
+                  background: "rgba(255,255,255,0.10)",
+                  border: "1px solid rgba(255,255,255,0.15)",
+                  color: "#ffffff",
+                }}
+                onFocus={e => (e.currentTarget.style.borderColor = "#fe6e00")}
+                onBlur={e => (e.currentTarget.style.borderColor = "rgba(255,255,255,0.15)")}
               />
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Password</label>
+              <label
+                className="block text-xs font-semibold uppercase tracking-wider mb-1.5"
+                style={{ color: "rgba(255,255,255,0.60)" }}
+              >
+                Password
+              </label>
               <div className="relative">
                 <input
                   type={showPass ? "text" : "password"}
                   name="password"
                   autoComplete="current-password"
                   required
-                  className="w-full border border-gray-300 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent pr-10"
                   placeholder="Masukkan password"
+                  className="w-full rounded-md px-3 pr-10 h-10 text-sm outline-none transition-colors"
+                  style={{
+                    background: "rgba(255,255,255,0.10)",
+                    border: "1px solid rgba(255,255,255,0.15)",
+                    color: "#ffffff",
+                  }}
+                  onFocus={e => (e.currentTarget.style.borderColor = "#fe6e00")}
+                  onBlur={e => (e.currentTarget.style.borderColor = "rgba(255,255,255,0.15)")}
                 />
                 <button
                   type="button"
                   onClick={() => setShowPass(v => !v)}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 transition-colors"
+                  style={{ color: "rgba(255,255,255,0.40)" }}
+                  onMouseEnter={e => (e.currentTarget.style.color = "#ffffff")}
+                  onMouseLeave={e => (e.currentTarget.style.color = "rgba(255,255,255,0.40)")}
                 >
                   {showPass ? (
                     <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -117,15 +165,26 @@ export default function AdminLogin({ actionData }: Route.ComponentProps) {
 
             <button
               type="submit"
-              className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2.5 rounded-xl transition-colors text-sm"
+              className="w-full h-10 rounded-md text-sm font-semibold text-white transition-colors mt-2"
+              style={{ background: "#fe6e00" }}
+              onMouseEnter={e => (e.currentTarget.style.background = "#ff6b00")}
+              onMouseLeave={e => (e.currentTarget.style.background = "#fe6e00")}
             >
               Masuk
             </button>
           </form>
         </div>
 
-        <p className="text-center text-slate-500 text-xs mt-4">
-          <a href="/" className="hover:text-slate-300 transition-colors">← Kembali ke Beranda</a>
+        <p className="text-center text-xs mt-4">
+          <a
+            href="/"
+            className="transition-colors"
+            style={{ color: "rgba(255,255,255,0.40)" }}
+            onMouseEnter={e => (e.currentTarget.style.color = "rgba(255,255,255,0.80)")}
+            onMouseLeave={e => (e.currentTarget.style.color = "rgba(255,255,255,0.40)")}
+          >
+            ← Kembali ke Beranda
+          </a>
         </p>
       </div>
     </div>

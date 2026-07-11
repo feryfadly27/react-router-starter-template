@@ -6,6 +6,7 @@ export default [
   route("kuesioner/:step", "routes/kuesioner.$step.tsx"),
   route("submit", "routes/submit.tsx"),
   route("hasil/:id", "routes/hasil.$id.tsx"),
+  route("signature/:key", "routes/signature.$key.tsx"),
   route("admin", "routes/admin.tsx"),
   route("admin/login", "routes/admin.login.tsx"),
   route("terima-kasih", "routes/terima-kasih.tsx"),

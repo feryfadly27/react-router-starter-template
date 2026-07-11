@@ -1,12 +1,13 @@
 import type { Route } from "./+types/hasil.$id";
 import { Link } from "react-router";
-import { DOMAINS, hitungKategori } from "../data/kuesioner";
+import { DOMAINS, hitungKategori, hitungSkorKeseluruhan } from "../data/kuesioner";
+import { getSessionUser } from "../lib/auth.server";
 
 export function meta({}: Route.MetaArgs) {
-  return [{ title: "Hasil Kuesioner – RME RS Abdul Manap" }];
+  return [{ title: "Hasil Kuesioner – RME" }];
 }
 
-export async function loader({ params, context }: Route.LoaderArgs) {
+export async function loader({ request, params, context }: Route.LoaderArgs) {
   const db = (context.cloudflare.env as any).DB as D1Database;
   const id = parseInt(params.id ?? "0");
 
@@ -16,7 +17,10 @@ export async function loader({ params, context }: Route.LoaderArgs) {
     .first<any>();
 
   if (!row) throw new Response("Tidak ditemukan", { status: 404 });
-  return row;
+
+  // Tanda tangan hanya ditampilkan bila yang membuka adalah admin yang login.
+  const user = await getSessionUser(db, request);
+  return { ...row, isAdmin: !!user };
 }
 
 export default function Hasil({ loaderData }: Route.ComponentProps) {
@@ -33,7 +37,9 @@ export default function Hasil({ loaderData }: Route.ComponentProps) {
     return { nama: d.nama, warna: d.warna, skor: Math.round(rata * 100) / 100 };
   });
 
-  const rataKeseluruhan = row.total_score ?? 0;
+  // Hitung ulang dari jawaban agar konsisten (rata-rata 13 domain), tidak
+  // bergantung pada total_score lama yang mungkin dihitung dengan metode berbeda.
+  const rataKeseluruhan = hitungSkorKeseluruhan(jawaban);
   const kategoriKeseluruhan = hitungKategori(rataKeseluruhan);
 
   const WARNA_TEXT: Record<string, string> = {
@@ -53,7 +59,7 @@ export default function Hasil({ loaderData }: Route.ComponentProps) {
             {kategoriKeseluruhan.warna === "green" ? "🎉" : kategoriKeseluruhan.warna === "yellow" ? "📋" : "⚠️"}
           </div>
           <h1 className="text-2xl font-bold text-gray-900 mb-1">Hasil Kuesioner Anda</h1>
-          <p className="text-gray-500 text-sm mb-4">Rekam Medis Elektronik – RS Abdul Manap Kota Jambi</p>
+          <p className="text-gray-500 text-sm mb-4">Rekam Medis Elektronik</p>
 
           <div className="inline-flex flex-col items-center">
             <div className={`text-5xl font-bold ${WARNA_TEXT[kategoriKeseluruhan.warna]}`}>
@@ -79,8 +85,28 @@ export default function Hasil({ loaderData }: Route.ComponentProps) {
             <div><span className="text-gray-400">Jenis Kelamin:</span> <span className="font-medium">{row.jenis_kelamin}</span></div>
             <div><span className="text-gray-400">Pekerjaan:</span> <span className="font-medium">{row.pekerjaan}</span></div>
             <div><span className="text-gray-400">Jabatan:</span> <span className="font-medium">{row.jabatan}</span></div>
+            <div><span className="text-gray-400">Pendidikan Terakhir:</span> <span className="font-medium">{row.pendidikan ?? "—"}</span></div>
+            <div><span className="text-gray-400">Masa Kerja:</span> <span className="font-medium">{row.masa_kerja ?? "—"}</span></div>
+            <div><span className="text-gray-400">Frekuensi Penggunaan RME:</span> <span className="font-medium">{row.frekuensi_rme ?? "—"}</span></div>
             <div><span className="text-gray-400">Waktu Isi:</span> <span className="font-medium">{new Date(row.created_at).toLocaleString("id-ID")}</span></div>
           </div>
+
+          {/* Tanda tangan – hanya untuk admin */}
+          {row.isAdmin && (
+            <div className="mt-4 pt-4 border-t border-gray-100">
+              <p className="text-sm text-gray-400 mb-2">Tanda Tangan Responden:</p>
+              {row.tanda_tangan_url ? (
+                <img
+                  src={`/signature/${encodeURIComponent(row.tanda_tangan_url.replace("signatures/", ""))}`}
+                  alt={`Tanda tangan ${row.nama}`}
+                  className="rounded-lg bg-white"
+                  style={{ border: "1px solid #e3e0dd", maxWidth: "320px", width: "100%", height: "auto" }}
+                />
+              ) : (
+                <p className="text-sm text-gray-400">— Tidak ada tanda tangan —</p>
+              )}
+            </div>
+          )}
         </div>
 
         {/* Skor per domain */}
@@ -128,13 +154,13 @@ export default function Hasil({ loaderData }: Route.ComponentProps) {
             <p>Skor rata-rata keseluruhan: <strong>{rataKeseluruhan.toFixed(2)}</strong> dari maksimal <strong>5.00</strong></p>
             <p>Kategori kesiapan: <strong>{kategoriKeseluruhan.label}</strong></p>
             {kategoriKeseluruhan.warna === "green" && (
-              <p className="mt-2">RS Abdul Manap menunjukkan tingkat kesiapan yang tinggi dalam penerapan Rekam Medis Elektronik.</p>
+              <p className="mt-2">Rumah sakit menunjukkan tingkat kesiapan yang tinggi dalam penerapan Rekam Medis Elektronik.</p>
             )}
             {kategoriKeseluruhan.warna === "yellow" && (
-              <p className="mt-2">RS Abdul Manap berada pada level kesiapan menengah. Diperlukan peningkatan pada beberapa domain.</p>
+              <p className="mt-2">Rumah sakit berada pada level kesiapan menengah. Diperlukan peningkatan pada beberapa domain.</p>
             )}
             {kategoriKeseluruhan.warna === "red" && (
-              <p className="mt-2">RS Abdul Manap masih memerlukan persiapan lebih lanjut sebelum menerapkan Rekam Medis Elektronik.</p>
+              <p className="mt-2">Rumah sakit masih memerlukan persiapan lebih lanjut sebelum menerapkan Rekam Medis Elektronik.</p>
             )}
           </div>
         </div>
